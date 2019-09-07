@@ -1,0 +1,121 @@
+WARNING 2019-09-07 20:25:03,984 base 152 Not Found: /
+WARNING 2019-09-07 20:25:03,984 basehttp 124 "GET / HTTP/1.1" 404 2070
+WARNING 2019-09-07 20:25:07,294 base 152 Not Found: /
+WARNING 2019-09-07 20:25:07,295 basehttp 124 "GET / HTTP/1.1" 404 2070
+ERROR 2019-09-07 20:25:07,746 exception 135 Internal Server Error: /register/
+Traceback (most recent call last):
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/template/utils.py", line 65, in __getitem__
+    return self._engines[alias]
+KeyError: 'jinja2'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/utils/module_loading.py", line 23, in import_string
+    return getattr(module, class_name)
+AttributeError: module 'meiduo.utils.jinja2_env' has no attribute 'jinja2_environment'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/views/generic/base.py", line 88, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/Users/xiaojie/Desktop/meiduo/meiduo/meiduo/meiduo/apps/users/views.py", line 16, in get
+    return render(request, 'register.html')
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/template/loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/template/loader.py", line 18, in get_template
+    engines = _engine_list(using)
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/template/loader.py", line 72, in _engine_list
+    return engines.all() if using is None else [engines[using]]
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/template/utils.py", line 89, in all
+    return [self[alias] for alias in self]
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/template/utils.py", line 89, in <listcomp>
+    return [self[alias] for alias in self]
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/template/utils.py", line 80, in __getitem__
+    engine = engine_cls(params)
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/template/backends/jinja2.py", line 29, in __init__
+    environment_cls = import_string(environment)
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/utils/module_loading.py", line 27, in import_string
+    six.reraise(ImportError, ImportError(msg), sys.exc_info()[2])
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/utils/six.py", line 685, in reraise
+    raise value.with_traceback(tb)
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/utils/module_loading.py", line 23, in import_string
+    return getattr(module, class_name)
+ImportError: Module "meiduo.utils.jinja2_env" does not define a "jinja2_environment" attribute/class
+ERROR 2019-09-07 20:25:07,800 basehttp 124 "GET /register/ HTTP/1.1" 500 134295
+ERROR 2019-09-07 20:25:09,010 exception 135 Internal Server Error: /register/
+Traceback (most recent call last):
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/template/utils.py", line 65, in __getitem__
+    return self._engines[alias]
+KeyError: 'jinja2'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/utils/module_loading.py", line 23, in import_string
+    return getattr(module, class_name)
+AttributeError: module 'meiduo.utils.jinja2_env' has no attribute 'jinja2_environment'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/views/generic/base.py", line 88, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/Users/xiaojie/Desktop/meiduo/meiduo/meiduo/meiduo/apps/users/views.py", line 16, in get
+    return render(request, 'register.html')
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/template/loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/template/loader.py", line 18, in get_template
+    engines = _engine_list(using)
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/template/loader.py", line 72, in _engine_list
+    return engines.all() if using is None else [engines[using]]
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/template/utils.py", line 89, in all
+    return [self[alias] for alias in self]
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/template/utils.py", line 89, in <listcomp>
+    return [self[alias] for alias in self]
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/template/utils.py", line 80, in __getitem__
+    engine = engine_cls(params)
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/template/backends/jinja2.py", line 29, in __init__
+    environment_cls = import_string(environment)
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/utils/module_loading.py", line 27, in import_string
+    six.reraise(ImportError, ImportError(msg), sys.exc_info()[2])
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/utils/six.py", line 685, in reraise
+    raise value.with_traceback(tb)
+  File "/Users/xiaojie/.virtualenvs/project/lib/python3.7/site-packages/django/utils/module_loading.py", line 23, in import_string
+    return getattr(module, class_name)
+ImportError: Module "meiduo.utils.jinja2_env" does not define a "jinja2_environment" attribute/class
+ERROR 2019-09-07 20:25:09,060 basehttp 124 "GET /register/ HTTP/1.1" 500 134295
+INFO 2019-09-07 20:25:46,816 basehttp 124 "GET /register/ HTTP/1.1" 200 4616
+INFO 2019-09-07 20:25:46,830 basehttp 124 "GET /static/css/reset.css HTTP/1.1" 200 638
+INFO 2019-09-07 20:25:46,831 basehttp 124 "GET /static/js/host.js HTTP/1.1" 200 120
+INFO 2019-09-07 20:25:46,831 basehttp 124 "GET /static/images/logo.png HTTP/1.1" 200 7450
+INFO 2019-09-07 20:25:46,832 basehttp 124 "GET /static/js/axios-0.18.0.min.js HTTP/1.1" 200 12941
+INFO 2019-09-07 20:25:46,833 basehttp 124 "GET /static/css/main.css HTTP/1.1" 200 39722
+INFO 2019-09-07 20:25:46,836 basehttp 124 "GET /static/js/register.js HTTP/1.1" 200 9786
+INFO 2019-09-07 20:25:46,837 basehttp 124 "GET /static/js/vue-2.5.16.js HTTP/1.1" 200 289307
+WARNING 2019-09-07 20:25:46,878 base 152 Not Found: /image_codes/a4218980-363a-4f19-a224-8bba30eb8012/
+WARNING 2019-09-07 20:25:46,879 basehttp 124 "GET /image_codes/a4218980-363a-4f19-a224-8bba30eb8012/ HTTP/1.1" 404 2235
+INFO 2019-09-07 20:25:46,883 basehttp 124 "GET /static/images/interval_line.png HTTP/1.1" 200 1123
+INFO 2019-09-07 20:25:46,884 basehttp 124 "GET /static/images/icons02.png HTTP/1.1" 200 3935
+INFO 2019-09-07 20:25:46,885 basehttp 124 "GET /static/images/register_banner.png HTTP/1.1" 200 54894
