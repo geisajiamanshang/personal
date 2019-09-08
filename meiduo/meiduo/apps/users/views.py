@@ -1,7 +1,9 @@
 import http
 import re
 
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate, logout
+from django.urls import reverse
+from django_redis import get_redis_connection
 from users.models import User
 from django.shortcuts import render, redirect
 
@@ -47,17 +49,17 @@ class RegisterView(View):
             return http.HttpResponseForbidden('手机号存在')
         # 短信验证码
         # 1.读取redis中的短信验证码
-        # redis_cli = get_redis_connection('sms_code')
-        # sms_code_redis = redis_cli.get(mobile)
-        # # 2.判断是否过期
-        # if sms_code_redis is None:
-        #     return http.HttpResponseForbidden('短信验证码已经过期')
-        # # 3.删除短信验证码，不可以使用第二次
-        # redis_cli.delete(mobile)
-        # redis_cli.delete(mobile + '_flag')
-        # # 4.判断是否正确
-        # if sms_code_redis.decode() != sms_code:
-        #     return http.HttpResponseForbidden('短信验证码错误')
+        redis_cli = get_redis_connection('sms_code')
+        sms_code_redis = redis_cli.get(mobile)
+        # 2.判断是否过期
+        if sms_code_redis is None:
+            return http.HttpResponseForbidden('短信验证码已经过期')
+        # 3.删除短信验证码，不可以使用第二次
+        redis_cli.delete(mobile)
+        redis_cli.delete(mobile + '_flag')
+        # 4.判断是否正确
+        if sms_code_redis.decode() != sms_code:
+            return http.HttpResponseForbidden('短信验证码错误')
 
         # 处理
         # 1.创建用户对象
@@ -101,3 +103,62 @@ class MobileCountVIew(View):
         '''
         count = User.objects.filter(mobile=mobile).count()
         return http.JsonRsponse({'code':RETCODE.OK,'errmsg':'OK','count':count})
+
+class LoginView(View):
+    def get(self,request):
+        '''
+        获取登录页面
+
+        :param request:
+        :return:
+        '''
+        return render(request,'login.html')
+
+    def post(self, request):
+        '''
+        login in
+        :param request:
+        :return:
+        '''
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        remembered = request.POST.get('remembered')
+
+        if not all([username, password]):
+            return http.HttpResponseForbidden('缺少必传参数')
+        if not re.match(r'^[a-zA-Z0-9-_]{5,20}$',username):
+            return http.HttpResponseForbidden('输入正确的用户名或手机号')
+        if not re.match(r'^[0-9a-zA-Z]{8,20}$', password):
+            return http.HttpResponseForbidden('密码最少8位，最长20位')
+
+        user = authenticate(username=username,password=password)
+        if user is None:
+            return render(request,'login.html', {'account_errmsg':'用户名或者密码错误'})
+
+        login(request,user)
+        if remembered != 'on':
+            request.session.set_expirty(0)
+        else:
+            request.session.set_expirty(None) # 默认session记住登录状态是2周
+        return redirect(reverse('contents:index'))
+
+
+class Logout(View):
+    def get(self,request):
+        '''
+        logout
+        :param request:
+        :return:
+        '''
+        logout(request)
+
+        response = redirect(reverse('contents:index'))
+        response.delete_cookie('username')
+        return response
+
+class UserInfoView(View):
+    def get(self, request):
+        if request.user.is_authenticated():
+            return render(request,'user_center_info.html')
+        else:
+            return redirect(reverse('users:login'))
