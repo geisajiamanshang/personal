@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 # Create your views here.
 from django.views.generic.base import View
 
+from meiduo.utils.response_code import RETCODE
 from . import constants
 
 
@@ -75,3 +76,28 @@ class RegisterView(View):
 
         # 响应
         return response
+
+class UsernameCountView(View):
+    def get(self,request,username):
+        '''
+        get the count of the username
+
+        :param request:
+        :param username:
+        :return:
+        '''
+        count = User.objects.filter(username=username).count()
+        return http.JsonResponse({'code':RETCODE.OK,'errmsg':'OK','count':count})
+
+
+class MobileCountVIew(View):
+    def get(self,request,mobile):
+        '''
+        judge the number is repeatable
+
+        :param request:
+        :param mobile:
+        :return:
+        '''
+        count = User.objects.filter(mobile=mobile).count()
+        return http.JsonRsponse({'code':RETCODE.OK,'errmsg':'OK','count':count})
