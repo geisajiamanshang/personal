@@ -55,6 +55,10 @@ INSTALLED_APPS = [
     # 完整导包路径
     # 'meiduo.apps.users.apps.UsersConfig',
     'users.apps.UsersConfig',
+    'contents',
+    'goods',
+    'oauth',
+    'verifications',
 
 
 

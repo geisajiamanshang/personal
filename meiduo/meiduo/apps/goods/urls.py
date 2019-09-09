@@ -1,4 +1,4 @@
-"""meiduo_mall URL Configuration
+""" URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.11/topics/http/urls/
@@ -13,19 +13,18 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
+from django.conf.urls import url
 from django.contrib import admin
-
+from . import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include('users.urls')),
-    url(r'^', include('contents.urls')),
-    url(r'^', include('goods.urls')),
-    url(r'^', include('areas.urls')),
-    url(r'^', include('verifications.urls')),
+    url(r'^list/(?P<category_id>\d+)/(?P<page_num>\d+)/$', views.ListView.as_view()),
+    url(r'^hot/(?P<category_id>\d+)/$', views.HotGoodsView.as_view()),
+    
 
 
 
 
 ]
+

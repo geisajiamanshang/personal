@@ -57,7 +57,7 @@ INSTALLED_APPS = [
     'contents.apps.ContentsConfig',
     'oauth.apps.OauthConfig',
     'areas.apps.AreasConfig',
-    'goods.apps.GoodsConfig',
+    'meiduo.apps.goods.apps.GoodsConfig',
     'carts.apps.CartsConfig',
     'orders.apps.OrdersConfig',
     'payments.apps.PaymentsConfig',
