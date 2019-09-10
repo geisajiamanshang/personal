@@ -1,4 +1,5 @@
 import http
+import json
 import re
 
 from django.contrib.auth import login, authenticate, logout
@@ -10,6 +11,7 @@ from django.shortcuts import render, redirect
 # Create your views here.
 from django.views.generic.base import View
 
+from meiduo.apps.goods.models import SKU
 from meiduo.utils.response_code import RETCODE
 from . import constants
 
@@ -162,3 +164,53 @@ class UserInfoView(View):
             return render(request,'user_center_info.html')
         else:
             return redirect(reverse('users:login'))
+
+
+class UserBrowserHistory(LoginRequiredJSONMixin, View):
+    def post(self,request):
+        '''
+        保存用户浏览记录
+
+        :param request:
+        :return:
+        '''
+        json_dict = json.loads(request.body.decode())
+        sku_id = json_dict.get('sku_id')
+
+        try:
+            sku = SKU.objects.get('sku_id')
+        except:
+            return http.HttpResponseForbidden('sku不存在')
+
+        # 浏览记录保存在内存中
+        redis_conn = get_redis_connection('history')
+        pl = redis_conn.pipeline()
+        user_id = request.user.id
+
+        pl.lrem('history_%s' % user_id,0,sku_id)
+        pl.lpush('history_%s' % user_id,sku_id)
+        pl.ltrim('history_%s' % user_id,0,4)
+        pl.execute()
+
+        return http.JsonResponse({'code':RETCODE.OK,'errmsg':'OK'})
+
+    def get(self,request):
+        '''
+        获取用户浏览记录
+
+        :param request:
+        :return:
+        '''
+        redis_conn = get_redis_connection('history')
+        sku_ids = redis_conn.lrange('history_%s' % request.user.id,0,4)
+        skus = []
+        for sku_id in sku_ids:
+            sku = SKU.objects.get(id=sku_id)
+        skus.append({
+            'id':sku_id,
+            'name':sku.name,
+            'default_image_url':sku.default_image_url,
+            'price':sku.price
+
+        })
+        return http.JsonResponse({'code': RETCODE.OK, 'errmsg': 'OK', 'skus': skus})
